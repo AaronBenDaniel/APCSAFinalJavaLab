@@ -4,9 +4,12 @@ class player extends entity{
   }
   
   public void physicsUpdate(){
+    super.physicsUpdate();
     if(aPressed && getVelX()>-7) addVelX(-2);
     if(dPressed && getVelX()<7) addVelX(2);
-    if(wPressed && onGround()) addVelY(-14);
-    super.physicsUpdate();
+    if(wPressed && onGround()) addVelY(-15);
+    if (this.getPosY()<10) {
+      transition.nextLevel();
+    }
   }
 }
