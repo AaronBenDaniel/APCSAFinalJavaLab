@@ -1,30 +1,35 @@
+// Both of these are needed for the asset dictionary
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-Dictionary<String, PImage> assets = new Hashtable<>();
-
-int IDCounter=0; // Processing won't lget me do this with a static attribute
-
-PImage background; // Background image
+// Processing won't let me do this with a static attribute
+int IDCounter=0;
 
 // Aliases
-static int NONE___ = 0;
-static int OTHER__ = 1;
-static int PLAYER_ = 2;
-static int TERRAIN = 3;
-static int TRAPDOR = 4;
-static int RIGHT = 0;
-static int LEFT = 1;
-
+int NONE___ = 0;
+int OTHER__ = 1;
+int PLAYER_ = 2;
+int TERRAIN = 3;
+int TRAPDOR = 4;
+int PLATFRM = 5;
+int RIGHT = 0;
+int LEFT = 1;
 
 // Global debug bools
-boolean showEntityID=false;
+boolean showEntityID=true;
 boolean showKeys=true;
 
 // Global consts
-static int blockSize = 48;
-static int gravity = 1;
+int blockSize = 48;
+int gravity = 1;
 
+// Asset dictionary
+Dictionary<String, PImage> assets = new Hashtable<>();
+
+// Background image
+PImage background;
+
+// Game objects
 player player;
 levelTransition transition = new levelTransition();
 ArrayList<entity> sceneA = new ArrayList<entity>();
@@ -49,33 +54,35 @@ void setup() {
     background.pixels[i]=PImage.blendColor(backgroundSource.pixels[i%backgroundSource.width+backgroundSource.width*((i/background.width)%backgroundSource.height)], color(100, 100, 110), SUBTRACT);
   }
 
+  // Initialize game objects
   levelA=new level(levelAArray);
   levelB=new level(levelBArray);
-
-  transition.transition(levelA);
-
+  transition.transition(levelB);
   player=new player(100, 100, assets.get("playerBlue"));
 }
 
 void draw() {
+  // Update level transition
   transition.transitionUpdate();
 
+  // Update player object
   player.draw();
   player.physicsUpdate();
 
-  for (int i=0; i<sceneA.size(); i++) {
-    entity entity = sceneA.get(i);
+  // Update sceneA
+  for(entity entity:sceneA) {
     entity.draw();
     entity.physicsUpdate();
-    sceneA.set(i, entity);
+    //if(entity.getType()==PLATFRM) System.out.println("platform udpate");
+    if(entity instanceof platform) System.out.println("works");
   }
 
-  for (int i=0; i<sceneB.size(); i++) {
-    entity entity = sceneB.get(i);
+  // Update sceneB
+  for(entity entity:sceneB) {
     entity.draw();
     entity.physicsUpdate();
-    sceneB.set(i, entity);
   }
-
+  
+  // Debug
   if (showKeys) printKeys();
 }

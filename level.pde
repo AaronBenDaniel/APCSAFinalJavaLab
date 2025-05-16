@@ -12,6 +12,8 @@ class level {
         entity entity;
         if (levelTestArray[y][x]==TRAPDOR)
           entity = new entity(x*blockSize, y*blockSize, assets.get("trapdoor"),TRAPDOR,true,false,false);
+        else if(levelTestArray[y][x]==PLATFRM)
+        entity = new platform(x*blockSize,y*blockSize,(x+2)*blockSize,y*blockSize,60);
         else
           entity = new entity(x*blockSize, y*blockSize, assets.get("stoneA"),TERRAIN,true,false,false);
         entity.posX=x*blockSize;

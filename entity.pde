@@ -44,7 +44,7 @@ class entity {
   
   // Duplicate constructor
   public entity(entity entity) {
-    ID=entity.ID;
+    ID=++IDCounter;
     this.posX=entity.posX;
     this.posY=entity.posY;
     this.sprite=entity.sprite;
@@ -83,8 +83,10 @@ class entity {
     }
   }
 
-  public void physicsUpdate() {
+  public void physicsUpdate() {    
     onGround=false;
+
+    if(type==PLATFRM) velX+=1;
 
     posX+=velX;
     if (velX>0) velX-=1;
@@ -127,8 +129,8 @@ class entity {
             int yClip;
 
             // Determine by how much the objects are colliding on each axis
-            xClip = (posX+blockSize/2)-(entity.posX+blockSize/2)-velX;
-            yClip = (posY+blockSize/2)-(entity.posY+blockSize/2)-velY;
+            xClip = (posX+blockSize/2)-(entity.posX+blockSize/2);
+            yClip = (posY+blockSize/2)-(entity.posY+blockSize/2)-velY; // Taking velY into account makes jumping more realistic
 
             // Push the object out on the side with the least intersection
             if (Math.abs(xClip)>Math.abs(yClip)) {
@@ -155,6 +157,10 @@ class entity {
     }
   }
 
+  public int getType(){
+    return(type);
+  }
+
   public void addVelX(int val) {
     velX+=val;
   }
@@ -179,6 +185,10 @@ class entity {
     posY+=val;
   }
 
+  public int getPosX(){
+    return(posX);
+  }
+  
   public int getPosY() {
     return(posY);
   }
