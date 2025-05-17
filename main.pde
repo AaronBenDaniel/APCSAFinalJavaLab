@@ -16,8 +16,8 @@ int RIGHT = 0;
 int LEFT = 1;
 
 // Global debug bools
-boolean showEntityID=true;
-boolean showKeys=true;
+boolean showEntityID=false;
+boolean showKeys=false;
 
 // Global consts
 int blockSize = 48;
@@ -41,9 +41,10 @@ void setup() {
   // Load assets
   assets.put("playerBlue", loadImage("Assets/playerBlue.png"));
   assets.put("stoneA", loadImage("Assets/stoneA.png"));
-  assets.put("stoneB", loadImage("Assets/stoneB.png"));
+  assets.put("stoneB", loadImage("Assets/stoneB.png")); //<>//
   assets.put("noSprite", loadImage("Assets/noSprite.png"));
   assets.put("trapdoor", loadImage("Assets/trapdoor.png"));
+  assets.put("platform", loadImage("Assets/platform.png"));
 
   // Build background image from stoneA sprite
   // Tiles source sprite across entire background image
@@ -57,7 +58,7 @@ void setup() {
   // Initialize game objects
   levelA=new level(levelAArray);
   levelB=new level(levelBArray);
-  transition.transition(levelB);
+  transition.transition(levelA);
   player=new player(100, 100, assets.get("playerBlue"));
 }
 
@@ -73,8 +74,6 @@ void draw() {
   for(entity entity:sceneA) {
     entity.draw();
     entity.physicsUpdate();
-    //if(entity.getType()==PLATFRM) System.out.println("platform udpate");
-    if(entity instanceof platform) System.out.println("works");
   }
 
   // Update sceneB

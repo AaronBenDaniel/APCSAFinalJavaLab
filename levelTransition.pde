@@ -9,7 +9,7 @@ public class levelTransition {
     level=iLevel;
     // Load new level into sceneB
     for (entity entity : level.entities) {
-      entity newEntity = new entity(entity);
+      entity newEntity = entity.duplicate();
       newEntity.addPosY(-1*height);
       sceneB.add(newEntity);
     }
@@ -22,10 +22,11 @@ public class levelTransition {
       amount=0;
       if (sceneB.size()>0) {
         sceneA.clear();
-        sceneB.clear();
-        for (entity entity : level.entities) {
-          sceneA.add(new entity(entity));
+        for (entity entity : sceneB) {
+          entity.addPosY(-1*(entity.getPosY()%blockSize));
+          sceneA.add(entity);
         }
+        sceneB.clear();
       }
       image(background, 0, 0);
       return;

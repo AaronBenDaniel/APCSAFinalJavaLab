@@ -44,7 +44,7 @@ class entity {
   
   // Duplicate constructor
   public entity(entity entity) {
-    ID=++IDCounter;
+    ID=entity.ID;
     this.posX=entity.posX;
     this.posY=entity.posY;
     this.sprite=entity.sprite;
@@ -52,6 +52,10 @@ class entity {
     this.ignoreGravity=entity.ignoreGravity;
     this.screenCollision=entity.screenCollision;
     this.entityCollision=entity.entityCollision;
+  }
+
+  public entity duplicate(){
+    return(new entity(this));
   }
 
   public void draw() {
@@ -85,8 +89,6 @@ class entity {
 
   public void physicsUpdate() {    
     onGround=false;
-
-    if(type==PLATFRM) velX+=1;
 
     posX+=velX;
     if (velX>0) velX-=1;
