@@ -35,10 +35,10 @@ class platform extends entity {
   public void physicsUpdate() {
     int xInc=(limRX-limLX);
     int yInc=(limLY-limUY);
-    
-    if(xInc!=0) xInc=2;
-    if(yInc!=0) yInc=2;
-  
+
+    if (xInc!=0) xInc=2;
+    if (yInc!=0) yInc=2;
+
     if (dir) {
       xInc*=-1;
       yInc*=-1;
@@ -54,8 +54,9 @@ class platform extends entity {
 
     super.physicsUpdate();
 
+    int yDist=this.getPosY()-player.getPosY()-blockSize;
     if (player.getPosX()<this.getPosX()+blockSize && player.getPosX()+blockSize>this.getPosX())
-      if (this.getPosY()-player.getPosY()-blockSize<=5) {
+      if (yDist<=5 && yDist>=-2) {
         player.addPosX(xInc);
         player.addPosY(yInc);
       }

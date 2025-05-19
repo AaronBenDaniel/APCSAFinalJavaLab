@@ -1,4 +1,4 @@
-// Both of these are needed for the asset dictionary
+// Both of these are needed for the asset dictionary //<>//
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -32,8 +32,10 @@ PImage background;
 // Game objects
 player player;
 levelTransition transition = new levelTransition();
+ArrayList<level> levels = new ArrayList<level>();
 ArrayList<entity> sceneA = new ArrayList<entity>();
 ArrayList<entity> sceneB = new ArrayList<entity>();
+
 
 void setup() {
   size(1248, 768); // Assigns values to `width` and `height` vars
@@ -41,10 +43,14 @@ void setup() {
   // Load assets
   assets.put("playerBlue", loadImage("Assets/playerBlue.png"));
   assets.put("stoneA", loadImage("Assets/stoneA.png"));
-  assets.put("stoneB", loadImage("Assets/stoneB.png")); //<>//
+  assets.put("stoneB", loadImage("Assets/stoneB.png"));
   assets.put("noSprite", loadImage("Assets/noSprite.png"));
   assets.put("trapdoor", loadImage("Assets/trapdoor.png"));
   assets.put("platform", loadImage("Assets/platform.png"));
+  assets.put("movementPrompt", loadImage("Assets/movementPrompt.png"));
+  assets.put("jumpPrompt", loadImage("Assets/jumpPrompt.png"));
+  assets.put("wallclingPrompt", loadImage("Assets/wallclingPrompt.png"));
+  assets.put("arrow", loadImage("Assets/arrow.png"));
 
   // Build background image from stoneA sprite
   // Tiles source sprite across entire background image
@@ -56,9 +62,17 @@ void setup() {
   }
 
   // Initialize game objects
-  levelA=new level(levelAArray);
-  levelB=new level(levelBArray);
-  transition.transition(levelA);
+  levels.add(new level(levelStartArray));
+  levels.add(new level(level1Array));
+  levels.add(new level(level2Array));
+  levels.add(new level(level3Array));
+
+  levels.get(0).add(new entity(2*blockSize, 8*blockSize, assets.get("movementPrompt"), OTHER__, true, false, false)); // Movement prompt
+  levels.get(0).add(new entity(13*blockSize, 8*blockSize, assets.get("jumpPrompt"), OTHER__, true, false, false)); // Jump prompt
+  levels.get(0).add(new entity(3*blockSize, 1*blockSize, assets.get("arrow"), OTHER__, true, false, false)); // Arrow
+  levels.get(3).add(new entity(2*blockSize, 8*blockSize, assets.get("wallclingPrompt"), OTHER__, true, false, false)); // Wallcling prompt
+
+  transition.transition(levels.get(3));
   player=new player(100, 100, assets.get("playerBlue"));
 }
 
@@ -66,22 +80,22 @@ void draw() {
   // Update level transition
   transition.transitionUpdate();
 
-  // Update player object
-  player.draw();
-  player.physicsUpdate();
-
   // Update sceneA
-  for(entity entity:sceneA) {
+  for (entity entity : sceneA) {
     entity.draw();
     entity.physicsUpdate();
   }
 
   // Update sceneB
-  for(entity entity:sceneB) {
+  for (entity entity : sceneB) {
     entity.draw();
     entity.physicsUpdate();
   }
-  
+
+  // Update player object
+  player.draw();
+  player.physicsUpdate();
+
   // Debug
   if (showKeys) printKeys();
 }

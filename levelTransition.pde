@@ -1,4 +1,6 @@
 public class levelTransition {
+  private int cooldown=30;
+  private int levelID=0;
   private int amount=0;
   private level level;
 
@@ -17,6 +19,7 @@ public class levelTransition {
   }
 
   public void transitionUpdate() {
+    if(cooldown>0) cooldown--;
     // If there is no more distance to move the levels, complete the transition
     if (amount<=0) {
       amount=0;
@@ -67,7 +70,11 @@ public class levelTransition {
   }
 
   public void nextLevel() {
-    transition((transition.getLevel()==levelB)?levelA:levelB);
+    if(cooldown>0) return;
+    cooldown=60;
+    levelID++;
+    if(levelID==levels.size()) levelID=0;
+    transition(levels.get(levelID));
   }
 
 

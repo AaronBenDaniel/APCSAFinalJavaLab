@@ -4,6 +4,10 @@ class player extends entity{
   public player(int posX,int posY,PImage sprite){
     super(posX,posY,sprite,PLAYER_);
     jumpCounter=0;
+    // Make sure the player starts facing right
+    this.setVelX(1);
+    this.draw();
+    this.setVelX(0);
   }
   
   public void physicsUpdate(){

@@ -38,4 +38,8 @@ class level {
       }
     }
   }
-};
+  
+  public void add(entity entity){
+    entities.add(entity);
+  }
+}

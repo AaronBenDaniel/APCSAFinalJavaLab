@@ -11,7 +11,7 @@ class entity {
   private boolean entityCollision;
   private boolean onGround;
 
-  private int direction=RIGHT;
+  private int direction=LEFT;
 
   public int entityCount() {
     return(IDCounter);
@@ -121,6 +121,7 @@ class entity {
     if (entityCollision) {
       for (entity entity : sceneA) {
         if (entity.type==PLAYER_) continue; // Don't collide with players
+        if (entity.type==OTHER__) continue; // Don't collide with other objects
         if (entity.ID==ID) continue; // Don't collide with self
 
         // Detect collision with object
