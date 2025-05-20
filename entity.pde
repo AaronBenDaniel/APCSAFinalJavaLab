@@ -134,7 +134,9 @@ class entity {
             // Determine by how much the objects are colliding on each axis
             xClip = (posX+blockSize/2)-(entity.posX+blockSize/2);
             yClip = (posY+blockSize/2)-(entity.posY+blockSize/2)-velY; // Taking velY into account makes jumping more realistic
-
+            
+            if(this instanceof player) xClip+=(xClip>0)?2:-2;  // This makes player hitboxes slightly slimmer which allows them to fall though 1 block gaps
+            
             // Push the object out on the side with the least intersection
             if (Math.abs(xClip)>Math.abs(yClip)) {
               if (xClip>0) {

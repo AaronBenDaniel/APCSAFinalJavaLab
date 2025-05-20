@@ -33,6 +33,7 @@ class platform extends entity {
   }
 
   public void physicsUpdate() {
+    // This controls the speed of the platform, it has support for different speeds, but I never ended up using it and they're hard-coded at 2 pixels per frame
     int xInc=(limRX-limLX);
     int yInc=(limLY-limUY);
 
@@ -47,6 +48,7 @@ class platform extends entity {
     this.addPosX(xInc);
     this.addPosY(yInc);
 
+    // Switch directions
     if (this.getPosX()>=limRX && this.getPosY()>=limLY && !dir)
       dir=true;
     else if (this.getPosX()<=limLX && this.getPosY()<=limUY && dir)
@@ -54,6 +56,7 @@ class platform extends entity {
 
     super.physicsUpdate();
 
+    // Move the player on top of the platform
     int yDist=this.getPosY()-player.getPosY()-blockSize;
     if (player.getPosX()<this.getPosX()+blockSize && player.getPosX()+blockSize>this.getPosX())
       if (yDist<=5 && yDist>=-2) {

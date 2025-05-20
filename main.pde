@@ -61,18 +61,23 @@ void setup() {
     background.pixels[i]=PImage.blendColor(backgroundSource.pixels[i%backgroundSource.width+backgroundSource.width*((i/background.width)%backgroundSource.height)], color(100, 100, 110), SUBTRACT);
   }
 
-  // Initialize game objects
+  // Initialize levels
   levels.add(new level(levelStartArray));
   levels.add(new level(level1Array));
   levels.add(new level(level2Array));
   levels.add(new level(level3Array));
+  levels.add(new level(level4Array));
+  levels.add(new level(level5Array));
+  levels.add(new level(level6Array));
 
+  // Add OTHER__ objects to levels
   levels.get(0).add(new entity(2*blockSize, 8*blockSize, assets.get("movementPrompt"), OTHER__, true, false, false)); // Movement prompt
   levels.get(0).add(new entity(13*blockSize, 8*blockSize, assets.get("jumpPrompt"), OTHER__, true, false, false)); // Jump prompt
   levels.get(0).add(new entity(3*blockSize, 1*blockSize, assets.get("arrow"), OTHER__, true, false, false)); // Arrow
   levels.get(3).add(new entity(2*blockSize, 8*blockSize, assets.get("wallclingPrompt"), OTHER__, true, false, false)); // Wallcling prompt
-
-  transition.transition(levels.get(3));
+  
+  // Load start level and initialize the player
+  transition.transition(levels.get(6));
   player=new player(100, 100, assets.get("playerBlue"));
 }
 
