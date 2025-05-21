@@ -51,6 +51,7 @@ void setup() {
   assets.put("jumpPrompt", loadImage("Assets/jumpPrompt.png"));
   assets.put("wallclingPrompt", loadImage("Assets/wallclingPrompt.png"));
   assets.put("arrow", loadImage("Assets/arrow.png"));
+  assets.put("congratulations", loadImage("Assets/congratulations.png"));
 
   // Build background image from stoneA sprite
   // Tiles source sprite across entire background image
@@ -69,15 +70,17 @@ void setup() {
   levels.add(new level(level4Array));
   levels.add(new level(level5Array));
   levels.add(new level(level6Array));
+  levels.add(new level(levelEndArray));
 
   // Add OTHER__ objects to levels
   levels.get(0).add(new entity(2*blockSize, 8*blockSize, assets.get("movementPrompt"), OTHER__, true, false, false)); // Movement prompt
   levels.get(0).add(new entity(13*blockSize, 8*blockSize, assets.get("jumpPrompt"), OTHER__, true, false, false)); // Jump prompt
   levels.get(0).add(new entity(3*blockSize, 1*blockSize, assets.get("arrow"), OTHER__, true, false, false)); // Arrow
   levels.get(3).add(new entity(2*blockSize, 8*blockSize, assets.get("wallclingPrompt"), OTHER__, true, false, false)); // Wallcling prompt
-  
+  levels.get(7).add(new entity(8*blockSize, 5*blockSize, assets.get("congratulations"), OTHER__, true, false, false)); // Congratuations
+
   // Load start level and initialize the player
-  transition.transition(levels.get(6));
+  transition.transition(levels.get(0));
   player=new player(100, 100, assets.get("playerBlue"));
 }
 
